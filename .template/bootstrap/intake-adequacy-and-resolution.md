@@ -6,7 +6,7 @@ This file defines how a bootstrap agent decides whether `.intake/` contains enou
 
 Prevent agents from fabricating a skill from weak intake while still preserving user convenience.
 
-The agent should resolve missing evidence through extraction, inference, safe discovery, scoped experiments, scope narrowing, or minimal human clarification before building `src/SKILL.md`.
+The agent should resolve missing evidence through extraction, inference, safe discovery, scoped experiments, scope narrowing, or minimal human clarification before replacing the placeholder skill.
 
 ## Why This Phase Exists
 
@@ -24,7 +24,7 @@ Do not treat weak intake as permission to explore indefinitely. Every discovery 
 
 ### Premature Skill Construction
 
-Do not start writing `src/SKILL.md` when the skill goal, activation boundary, workflow, required inputs, expected outputs, or safety constraints are unknown.
+Do not start replacing `skills/placeholder-skill/SKILL.md` when the skill goal, activation boundary, workflow, required inputs, expected outputs, or safety constraints are unknown.
 
 ### Questionnaire Transfer
 
@@ -264,7 +264,7 @@ Do not use low-confidence assumptions to pass the build readiness gate in high-r
 
 ## Alignment Confirmation
 
-After the build readiness gate passes and before writing `src/SKILL.md`, confirm the agent's synthesized understanding with the user. The purpose is alignment, not design delegation.
+After the build readiness gate passes and before renaming or replacing the placeholder skill, confirm the agent's synthesized understanding with the user. The purpose is alignment, not design delegation.
 
 Present a short synthesis the user can confirm or correct in one reading:
 

@@ -4,7 +4,7 @@ Generated skill reference files belong here.
 
 ## Use
 
-Keep `SKILL.md` concise. Move durable detail, frameworks, examples, process notes, and domain-specific reference material into focused files in this folder.
+Keep `SKILL.md` concise. Move durable detail, frameworks, examples, process notes, and domain knowledge into focused files in this folder.
 
 ## Boundary
 

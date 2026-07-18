@@ -8,4 +8,4 @@ Add fixtures that help future agents check whether the skill still activates cor
 
 ## Boundary
 
-Fixtures are for testing the skill. They are not normal runtime references.
+Fixtures are maintenance evidence. Keep them outside `skills/<name>/` so GitHub CLI and release packages do not install them as runtime content.

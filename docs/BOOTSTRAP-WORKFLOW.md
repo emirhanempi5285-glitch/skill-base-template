@@ -18,7 +18,7 @@ The workflow exists so users can provide domain material without needing to desi
 6. The agent assesses whether intake is adequate for skill construction.
 7. The agent resolves missing evidence when intake is empty, weak, conflicting, or exploratory.
 8. The agent designs the skill and records assumptions after the build readiness gate passes.
-9. The agent builds `src/SKILL.md`, references, docs, and packaging metadata.
+9. The agent renames `skills/placeholder-skill/` to the confirmed skill name and builds `SKILL.md`, runtime references, docs, maintenance fixtures, and packaging metadata.
 10. The agent rewrites `README.md` and `AGENTS.md` for the generated skill.
 11. The agent rewrites GitHub community files for the generated repository owner.
 12. The agent installs generated skill workflows and removes template-only workflows.
@@ -52,7 +52,7 @@ GitHub's template flow creates a separate repository with the copied directory s
 
 During bootstrap, user-authored files belong only in `.intake/`.
 
-This boundary keeps the user's work simple and gives agents a clear trust model. `.intake/` is source evidence. `.template/` is bootstrap instruction. `src/` is the generated runtime skill package.
+This boundary keeps the user's work simple and gives agents a clear trust model. `.intake/` is source evidence. `.template/` is bootstrap instruction. `skills/<name>/` is the generated runtime skill package, and root `tests/` is maintenance evidence.
 
 The intake can be rich source material or a minimal skill idea. If the intake is empty or insufficient, the agent must run the intake adequacy and resolution procedure before building the skill.
 
@@ -62,7 +62,7 @@ The agent should infer the reusable capability hidden in the intake. It should d
 
 The agent should preserve reasoning that future maintainers need. It should not preserve bootstrap history just because it was present during construction.
 
-Before writing `src/SKILL.md`, the agent should prove the skill is buildable. The agent should assess the skill goal, activation boundary, workflow, required inputs, expected outputs, safety constraints, verification method, and maintenance risks.
+Before replacing the placeholder `SKILL.md`, the agent should prove the skill is buildable. The agent should assess the skill goal, activation boundary, workflow, required inputs, expected outputs, safety constraints, verification method, and maintenance risks.
 
 When evidence is missing, the agent should use the lowest-cost resolution path available:
 
@@ -80,8 +80,10 @@ This protects the generated skill from becoming a plausible but unsupported inst
 
 The generated repository should contain:
 
-- `src/SKILL.md` as the runtime skill entry point.
-- `src/references/` for durable supporting knowledge.
+- `skills/<name>/SKILL.md` as the runtime skill entry point with a matching directory and frontmatter name.
+- `skills/<name>/references/` for durable runtime knowledge, including a focused update reference when public delivery supports it.
+- `tests/fixtures/` for maintenance prompts and examples that must not be installed as runtime content.
+- Root `INSTALL.md` and `docs/GITHUB-CLI.md` as beginner entry points with complete commands and no unresolved placeholders.
 - `docs/ARCHITECTURE.md` for design intent.
 - `docs/RELEASING.md` for release process.
 - `packaging/` for plugin manifests.
@@ -96,7 +98,7 @@ The reason is authority clarity. Future agents should not have to decide whether
 
 GitHub community files are part of cleanup. Files such as `.github/CODEOWNERS`, `.github/FUNDING.yml`, issue templates, discussion templates, `CONTRIBUTING.md`, `SUPPORT.md`, and `SECURITY.md` must reflect the generated repository owner and procedures.
 
-Workflow files are also part of cleanup. The template repository uses `.github/workflows/template-ci.yml` and `.github/workflows/template-release-draft.yml`; generated skill repositories should replace them with generated skill CI and release workflows from `.template/generated/.github/workflows/`.
+Workflow files are also part of cleanup. The template repository uses `.github/workflows/template-ci.yml` and `.github/workflows/template-release-draft.yml`; generated skill repositories should install CI, draft release, and public GitHub CLI install verification workflows from `.template/generated/.github/workflows/`.
 
 ## Release Path
 

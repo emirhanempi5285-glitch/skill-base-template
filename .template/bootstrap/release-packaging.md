@@ -30,11 +30,20 @@ For every release tag:
 
 ## Required Assets
 
-Every release should produce three ZIP files:
+Every release should produce three ZIP files and one checksum manifest:
 
 - `skill-name-vX.Y.Z.zip`
 - `skill-name-codex-plugin-vX.Y.Z.zip`
 - `skill-name-claude-plugin-vX.Y.Z.zip`
+- `SHA256SUMS`
+
+The workflow should attest each ZIP after packaging and before upload.
+
+## Canonical Source
+
+Package from exactly one `skills/<name>/SKILL.md` tree whose directory and frontmatter names agree. GitHub CLI source installation reads this tagged tree directly, while release and plugin consumers receive copies of the same runtime content.
+
+Keep maintenance fixtures under root `tests/` so source installation and release packages do not deliver them as runtime instructions.
 
 ## Exclusions
 
@@ -65,7 +74,11 @@ Rationale: Manifests are the package identity seen by host systems. Stale manife
 
 ## Workflow Rules
 
-The draft release workflow should package from the tagged commit. It should refuse to publish when release notes or changelog entries are missing.
+The draft release workflow should package from the tagged commit, generate checksums, attest every ZIP, and refuse to mutate a published release when notes or changelog entries are missing.
+
+Run `gh skill publish --dry-run` in a clean checkout before packaging creates `dist/`. Do not use `gh skill publish --tag` because it bypasses the generated package, checksum, attestation, curated note, draft, and review sequence.
+
+After publication, a separate release event workflow should install the versionless public release into an ephemeral profile and verify source metadata, file inventory, and content without executing the installed skill.
 
 Rationale: A tag is a promise that the repository state, docs, package manifests, and release notes describe the same artifact.
 

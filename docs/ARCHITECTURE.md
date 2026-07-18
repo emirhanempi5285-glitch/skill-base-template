@@ -27,11 +27,12 @@ Important areas:
 - `.intake/` contains user source material.
 - `.template/` contains agent bootstrap instructions.
 - `.template/generated/` contains files that are installed into generated skill repositories.
-- `src/` contains a placeholder skill until generation is complete.
+- `skills/placeholder-skill/` contains the standard placeholder source until the final skill name is confirmed.
+- `tests/fixtures/` contains maintenance examples that must not enter the installed runtime.
 - `docs/` contains template documentation until rewritten.
 - `packaging/` contains reusable plugin manifest skeletons.
 
-The reason to keep these areas separate is that each area has a different authority level. Intake is evidence from the user. Template files are instructions for the builder. `src/` becomes the runtime product.
+The reason to keep these areas separate is that each area has a different authority level. Intake is evidence from the user. Template files are instructions for the builder. `skills/<name>/` becomes the runtime product, while `tests/` remains maintenance evidence.
 
 Bootstrap mode includes an intake adequacy step before skill construction. This step determines whether the available intake can support a transferable skill or whether the agent must resolve missing evidence first.
 
@@ -41,8 +42,9 @@ Skill mode is the final state after the agent builds the skill and cleans up boo
 
 Important areas:
 
-- `src/SKILL.md` is the canonical skill entry point.
-- `src/references/` contains durable supporting knowledge.
+- `skills/<name>/SKILL.md` is the canonical skill entry point and its directory name matches frontmatter.
+- `skills/<name>/references/` contains durable runtime knowledge.
+- `tests/fixtures/` contains activation and behavior evidence outside the installable tree.
 - `docs/` explains the generated skill.
 - `AGENTS.md` explains how future agents maintain the skill.
 - `.github/` explains how GitHub issues, discussions, reviews, funding, and repository automation work for the generated skill.
@@ -68,10 +70,18 @@ During maintenance mode, authority changes:
 1. The generated repository `AGENTS.md`.
 2. `docs/ARCHITECTURE.md`.
 3. Generated docs and release process.
-4. `src/SKILL.md`.
+4. `skills/<name>/SKILL.md`.
 5. New material intentionally placed in `.intake/` for updates.
 
-`src/SKILL.md` is the canonical skill entry point for installed agent hosts, but it is not the highest-level design authority for repository maintenance. In maintenance work, `SKILL.md` is the runtime implementation of the skill. It should stay aligned with the repository `AGENTS.md` and the design intent documented in `docs/ARCHITECTURE.md`.
+`skills/<name>/SKILL.md` is the canonical skill entry point for installed agent hosts, but it is not the highest-level design authority for repository maintenance. In maintenance work, `SKILL.md` is the runtime implementation of the skill. It should stay aligned with the repository `AGENTS.md` and the design intent documented in `docs/ARCHITECTURE.md`.
+
+## Delivery Channels
+
+GitHub CLI source installation and release ZIP installation share one canonical runtime tree. GitHub CLI reads the tagged Git tree and adds source metadata, while browser and plugin hosts use the packaged standalone, Codex plugin, and Claude plugin ZIPs.
+
+The generated draft release workflow remains authoritative for curated notes, packages, checksums, attestations, and publication review. Clean `gh skill publish --dry-run` validation checks the source layout without delegating release creation to the preview publisher.
+
+After publication, an ephemeral workflow installs the versionless public release and compares the installed tree without executing it. This confirms the delivery channel while keeping GitHub CLI optional for runtime use.
 
 This authority shift is why rewriting `AGENTS.md` is required. The old file governs construction. The new file governs maintenance. `docs/ARCHITECTURE.md` should preserve the reasoning behind the generated skill's structure so future agents can judge when an implementation change is aligned with the design and when it changes the design itself.
 

@@ -45,18 +45,24 @@ Secret scanning and push protection are enabled, so a credential pushed by mista
 
 A release is a version bump landed through a pull request, followed by a tag.
 
-1. On a branch, update `src/SKILL.md` and the relevant files in `src/references/`, then `README.md` and the files in `docs/`.
+1. On a branch, update `skills/<name>/SKILL.md` and the relevant runtime references, then update root `INSTALL.md`, `README.md`, maintenance fixtures, and the affected files in `docs/`.
 2. Set the new version in `package.json` and in both `packaging/*/plugin.json`.
 3. Add a `## [vX.Y.Z]` section to `CHANGELOG.md`, move any entries from `## [Unreleased]` into it, and reset `## [Unreleased]` to note no unreleased changes. The release workflow requires this exact heading for the tag.
 4. Add `docs/releases/vX.Y.Z.md` with the release notes. The release workflow requires this file for the tag.
-5. Run `npm run validate`, then `npm run package -- vX.Y.Z` to confirm the assets build. Assets are written to `dist/assets/`, which is git-ignored.
+5. Run `gh skill publish --dry-run` from a clean checkout before generated files exist, then run `npm run validate` and `npm run package -- vX.Y.Z`. Assets are written to ignored `dist/assets/`.
 6. Open the pull request, let the check pass, and squash-merge it into `main`.
 
 ## Tagging and the draft release
 
 After the version bump is on `main`, push a `vX.Y.Z` tag. Pushing a tag is not a push to the `main` branch, so the branch ruleset does not block it. The tag triggers `.github/workflows/release-draft.yml`, which validates the skill, packages the assets, creates or updates a draft GitHub release from `docs/releases/vX.Y.Z.md`, and uploads the ZIP assets. It refuses to run if the matching `## [vX.Y.Z]` section in `CHANGELOG.md` or the release-notes file is missing.
 
-The workflow leaves the release as a draft. Review it on GitHub and publish it manually.
+An active tag ruleset should prevent updates and deletion for public `v*` release tags. Correct a release with a new version because moving a published tag breaks installed source identity and artifact provenance.
+
+The workflow leaves the release as a draft with three ZIPs, `SHA256SUMS`, and provenance attestations. Review it on GitHub and publish it manually.
+
+Do not use `gh skill publish --tag` for a generated repository with this release workflow. That preview command can push the branch and create an immediately published release without the generated packages, checksums, attestations, curated notes, or draft review.
+
+Publishing the draft triggers `.github/workflows/gh-skill-install.yml`, which installs the versionless public release in an ephemeral runner and verifies its source metadata and runtime content without executing the skill.
 
 ## Versioning
 

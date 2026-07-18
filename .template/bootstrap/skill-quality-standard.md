@@ -21,7 +21,7 @@ This is why the quality bar emphasizes description quality, boundaries, progress
 
 ## Required Skill Shape
 
-Every generated skill must have `src/SKILL.md`.
+Every generated dedicated repository must have exactly one `skills/<name>/SKILL.md`, and the frontmatter name must match the containing directory.
 
 The `SKILL.md` file must begin with YAML frontmatter containing:
 
@@ -67,8 +67,11 @@ The `SKILL.md` body must include:
 - Reference loading guidance.
 - Output expectations.
 - Completion criteria.
+- A direct focused reference for requests to install, locate, update, repair, reinstall, or verify this skill.
 
 Rationale: The frontmatter decides whether the skill loads. The body decides whether the activated agent can execute the workflow without reconstructing missing context.
+
+The focused update reference must identify the installed source and parent skills folder, use a dry run before replacement, target one folder when several copies share the same name, handle pins separately, and stop on unresolved source metadata or local changes. Keep broader GitHub CLI education and release mechanics in repository documentation.
 
 ## Generated README Shape
 
@@ -83,7 +86,7 @@ Order the README so value comes first, then installation, then usage, then a sep
 
 The install section links to the repository's Releases page and names the three release assets: the standalone skill ZIP, the Claude plugin ZIP, and the Codex plugin ZIP. Tell readers to download the asset that matches their tool rather than cloning.
 
-Keep clone and maintainer commands such as `npm run validate` and `npm run package` out of the opening. Move conceptual and internal detail into `docs/` and link to it from the README. The install locations in the README and in `docs/INSTALL.md` must agree.
+Keep clone and maintainer commands such as `npm run validate` and `npm run package` out of the opening. Move conceptual and internal detail into `docs/` and link to it from the README. The install locations in the README and root `INSTALL.md` must agree; `docs/INSTALL.md` may remain as a compatibility pointer.
 
 Required elements: an H1 that is the skill name, a first paragraph that says what the skill does without relying on another file, and the license stated or linked. Front-load anything decision-critical, such as prerequisites or warnings, because readers consume the page in part.
 
@@ -93,7 +96,7 @@ Rationale: A normal user landing on a published skill should be able to download
 
 ## Reference Rules
 
-Move durable detail into `src/references/` when it would make `SKILL.md` too long or too dense.
+Move durable runtime detail into `skills/<name>/references/` when it would make `SKILL.md` too long or too dense.
 
 Reference files should be focused. A future agent should be able to load one relevant file without loading the whole reference library.
 
@@ -101,7 +104,7 @@ Rationale: References protect context budget. A skill that forces every task to 
 
 ## Fixture Rules
 
-Use `src/test-fixtures/` for prompts or examples that verify the skill after changes. Do not load fixtures during ordinary skill use unless the task is specifically to test the skill.
+Use root `tests/fixtures/` for prompts or examples that verify the skill after changes. Do not place maintenance fixtures below `skills/<name>/` because GitHub CLI and release packages would install them as runtime content.
 
 Rationale: Fixtures preserve behavioral expectations across maintenance changes. They are evidence that the skill still works, not part of normal execution.
 

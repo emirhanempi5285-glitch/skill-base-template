@@ -8,7 +8,7 @@ Define the repository states before bootstrap, during bootstrap, and after clean
 
 Repository shape is a communication channel. Future agents infer what matters from where files live, which files remain, and which files are packaged.
 
-The template uses structure to make authority visible: `.intake/` is user evidence, `.template/` is temporary bootstrap guidance, `src/` is the runtime skill, and `docs/` is durable repository explanation.
+The template uses structure to make authority visible: `.intake/` is user evidence, `.template/` is temporary bootstrap guidance, `skills/<name>/` is the runtime skill, `tests/` is maintenance evidence, and `docs/` is durable repository explanation.
 
 ## Shape Values
 
@@ -28,7 +28,8 @@ skill-repository/
 |-- .intake/
 |-- .template/
 |-- .plans/
-|-- src/
+|-- skills/
+|-- tests/
 |-- docs/
 |-- packaging/
 |-- scripts/
@@ -44,12 +45,15 @@ Rationale: Bootstrap instructions need to be discoverable during construction, b
 The agent builds the skill product while `.template/` still exists.
 
 ```text
-src/
-|-- SKILL.md
-|-- references/
-|-- scripts/
-|-- assets/
-`-- test-fixtures/
+skills/
+`-- skill-name/
+    |-- SKILL.md
+    |-- references/
+    |-- scripts/
+    `-- assets/
+
+tests/
+`-- fixtures/
 ```
 
 Only create optional folders when they contain useful files or clarify a generated package shape.
@@ -68,7 +72,9 @@ skill-name/
 |-- LICENSE
 |-- .intake/
 |-- .skill-template-feedback/
-|-- src/
+|-- INSTALL.md
+|-- skills/
+|-- tests/
 |-- docs/
 |-- packaging/
 |-- scripts/

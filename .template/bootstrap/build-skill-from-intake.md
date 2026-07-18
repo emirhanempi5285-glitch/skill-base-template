@@ -76,7 +76,7 @@ Use `.template/bootstrap/intake-adequacy-and-resolution.md` for the full procedu
 
 If intake is adequate, record the assessment and continue to Phase 1.
 
-If intake is missing build-critical evidence, resolve the gap through extraction, inference, safe discovery, scoped experiments, scope narrowing, minimal human clarification, or a documented stop. Do not start `src/SKILL.md` until the build readiness gate passes and the agent's understanding is confirmed with the user.
+If intake is missing build-critical evidence, resolve the gap through extraction, inference, safe discovery, scoped experiments, scope narrowing, minimal human clarification, or a documented stop. Do not replace `skills/placeholder-skill/SKILL.md` until the build readiness gate passes and the agent's understanding is confirmed with the user.
 
 Required temporary artifacts:
 
@@ -106,7 +106,7 @@ Create a temporary design note in `.template/state/skill-design.md` while bootst
 - Which prompts should not activate the skill?
 - What workflow should the skill teach?
 - Which intake material belongs in `SKILL.md`?
-- Which intake material belongs in `src/references/`?
+- Which intake material belongs in `skills/<name>/references/`?
 - Are scripts, templates, assets, or test fixtures needed?
 - What assumptions did the agent make?
 - What should future maintainers review periodically?
@@ -121,19 +121,22 @@ Rationale: The agent has now synthesized a design from intake and its own infere
 
 ## Phase 3: Build The Skill Product
 
-Build the product surface in `src/`.
+Choose the final portable skill name, rename `skills/placeholder-skill/` to `skills/<name>/`, and build the runtime product there.
 
-`src/SKILL.md` is the canonical skill entry point. Keep it concise enough to load into an agent context. Move detailed durable material into `src/references/`.
+`skills/<name>/SKILL.md` is the canonical skill entry point, and its frontmatter name must match its directory. Keep it concise enough to load into an agent context. Move detailed runtime material into `skills/<name>/references/` and maintenance fixtures into root `tests/fixtures/`.
 
 Use this layout when useful:
 
 ```text
-src/
-|-- SKILL.md
-|-- references/
-|-- scripts/
-|-- assets/
-`-- test-fixtures/
+skills/
+`-- skill-name/
+    |-- SKILL.md
+    |-- references/
+    |-- scripts/
+    `-- assets/
+
+tests/
+`-- fixtures/
 ```
 
 Do not create empty folders unless they clarify the intended structure or contain `.gitkeep`.
@@ -148,7 +151,10 @@ Required files:
 
 - `README.md`
 - `docs/QUICKSTART.md`
-- `docs/INSTALL.md`
+- `INSTALL.md`
+- `docs/GITHUB-CLI.md`
+- `docs/GITHUB-CLI-DELIVERY.md`
+- `docs/INSTALL.md` as a compatibility pointer to root `INSTALL.md`
 - `docs/ARCHITECTURE.md`
 - `docs/RELEASING.md`
 - `docs/VERSION.md`
@@ -166,7 +172,9 @@ The new file must:
 
 - Name the generated skill repository.
 - State the maintenance goal in the summary.
-- Identify `src/SKILL.md` as the canonical skill entry point.
+- Identify `skills/<name>/SKILL.md` as the canonical skill entry point.
+- Identify `tests/fixtures/` as maintenance evidence that must remain outside runtime delivery.
+- Route requests to update the skill to a focused direct reference that checks source metadata and uses folder targeting when needed.
 - Define any specialized terms with entity-bias risk.
 - Tell agents how to update references, fixtures, docs, packaging, and release notes.
 - Tell agents which validation commands to run.

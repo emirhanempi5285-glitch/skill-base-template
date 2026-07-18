@@ -90,7 +90,7 @@ At minimum, check:
 - `.github/copilot-instructions.md` points to the generated repository `AGENTS.md` and validation commands.
 - `.github/workflows/template-ci.yml` is removed.
 - `.github/workflows/template-release-draft.yml` is removed.
-- `.github/workflows/ci.yml` and `.github/workflows/release-draft.yml` are installed from `.template/generated/.github/workflows/` or rewritten for the generated skill.
+- `.github/workflows/ci.yml`, `.github/workflows/release-draft.yml`, and `.github/workflows/gh-skill-install.yml` are installed from `.template/generated/.github/workflows/` or rewritten for the generated skill.
 - `CONTRIBUTING.md`, `SUPPORT.md`, and `SECURITY.md` describe the generated repository's process.
 
 Rationale: these files are public governance files. If they still mention the template author after generation, contributors and agents may route support, ownership, funding, or reviews to the wrong place.
@@ -102,6 +102,18 @@ A generated repository made public starts with no protection. The maintenance `A
 Confirm with the user before changing repository settings. These are outward-facing actions on a public repository.
 
 Apply the settings with `gh`. Replace `OWNER/REPO` with the generated repository. The required status check is named `Validate skill package`, the job in the generated `ci.yml`. The CI workflow must already exist on the default branch so the check is selectable.
+
+After the user confirms public discoverability, add the Agent Skills topic:
+
+```bash
+gh repo edit OWNER/REPO --add-topic agent-skills
+```
+
+The topic is an ecosystem signal and may affect future discovery behavior. It does not grant access, install a skill, or replace the standard source layout.
+
+Create an active repository ruleset for release tags that match `v*`. Block tag updates and deletion, avoid bypass actors unless the user documents a recovery need, and verify the ruleset before the first public release.
+
+Protected release tags preserve the source identity referenced by installed metadata, packages, checksums, and attestations. Correct a bad release with a new version instead of moving an existing public tag.
 
 Repository settings, squash-only merges and Discussions:
 
@@ -171,7 +183,10 @@ Before declaring cleanup complete, verify:
 - `.plans/` is absent.
 - `README.md` describes the generated skill.
 - `AGENTS.md` describes maintenance mode.
-- `src/SKILL.md` does not reference `.template/`.
+- Exactly one `skills/<name>/SKILL.md` exists, its names agree, and it does not reference `.template/`.
+- Root `tests/fixtures/` contains maintenance cases and no fixture directory exists inside the runtime skill.
+- Root `INSTALL.md` and `docs/GITHUB-CLI.md` contain the final public identity, complete copyable commands, and no bootstrap placeholders.
+- All three generated workflows are installed, including the public GitHub CLI install verifier.
 - `.skill-template-feedback/` exists with a tracked `README.md` and `.gitkeep`.
 - Release staging excludes `.intake/`.
 - Validation passes.

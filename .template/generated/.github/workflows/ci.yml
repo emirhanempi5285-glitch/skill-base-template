@@ -7,6 +7,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     name: Validate skill package
@@ -23,6 +26,11 @@ jobs:
 
       - name: Validate skill
         run: npm run validate
+
+      - name: Validate GitHub CLI skill source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh skill publish --dry-run
 
       - name: Package smoke test
         run: npm run package -- v0.0.0 # placeholder tag; not a real release version

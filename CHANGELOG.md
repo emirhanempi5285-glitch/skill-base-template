@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 
-- No unreleased changes.
+- Replace the incompatible `src/SKILL.md` source with one standard `skills/<name>/SKILL.md` tree and keep maintenance fixtures outside the installed runtime.
+- Add GitHub CLI publisher validation, public install verification, checksums, attestations, root installation guidance, beginner orientation, and a focused runtime update scaffold.
+- Make validation, packaging, archive fallback, and installed tree verification discover the generated skill dynamically and remain portable across operating systems.
+- Require one physical source line per Markdown paragraph or list item, one idea per paragraph, and empty lines between Markdown blocks.
 
 ## [v1.3.0]
 

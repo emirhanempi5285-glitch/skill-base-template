@@ -1,6 +1,7 @@
 ---
 name: placeholder-skill
 description: Build a real agent skill from user-provided intake material. Use this placeholder only while the repository is still in bootstrap mode and before an agent has generated the final skill package.
+license: MIT
 ---
 
 # Placeholder Skill
@@ -17,4 +18,6 @@ Do not publish this placeholder as a real skill. Do not package it as a producti
 
 ## Bootstrap Instruction
 
-Agents must read the repository `AGENTS.md` and `.template/bootstrap/build-skill-from-intake.md`, then replace this file with the generated skill.
+Agents must read the repository `AGENTS.md` and `.template/bootstrap/build-skill-from-intake.md`, choose the final skill name, rename this directory to that name, and replace this file with the generated skill.
+
+Use [install and update this skill](references/install-and-update-this-skill.md) only to verify that the generated runtime retains a focused update path after all placeholders are replaced.

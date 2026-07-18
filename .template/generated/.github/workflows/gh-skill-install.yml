@@ -1,0 +1,50 @@
+name: GitHub CLI Skill Install
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+jobs:
+  verify-install:
+    name: Verify public gh skill install
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out released source
+        uses: actions/checkout@v7
+        with:
+          ref: \${{ github.event.release.tag_name }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Confirm GitHub CLI skill support
+        run: gh skill --help
+
+      - name: Resolve canonical skill
+        id: skill
+        shell: bash
+        run: |
+          set -euo pipefail
+          skill_name="$(node scripts/verify-gh-skill-install.mjs --print-skill-name)"
+          echo "name=\${skill_name}" >> "\${GITHUB_OUTPUT}"
+
+      - name: Install the latest published release
+        shell: bash
+        env:
+          GH_TOKEN: \${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh skill install "\${GITHUB_REPOSITORY}" "skills/\${{ steps.skill.outputs.name }}" --dir "\${RUNNER_TEMP}/gh-skill-install"
+
+      - name: Verify installed source and metadata
+        env:
+          INSTALL_ROOT: \${{ runner.temp }}/gh-skill-install
+          RELEASE_TAG: \${{ github.event.release.tag_name }}
+        run: npm run verify:gh-skill -- --install-root "\${INSTALL_ROOT}" --repository "\${GITHUB_REPOSITORY}" --tag "\${RELEASE_TAG}"

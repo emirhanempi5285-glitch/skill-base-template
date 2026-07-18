@@ -15,8 +15,8 @@ This template promotes a structured workflow for automated creation, validation,
 - Intake-driven skill generation from `.intake/`.
 - Intake adequacy checks for empty, weak, conflicting, or exploratory starts.
 - Bootstrap instructions for AI coding agents.
-- A portable `src/SKILL.md` package layout.
-- Reference, asset, and fixture folders for progressive disclosure.
+- A portable `skills/<name>/SKILL.md` source layout that works with Agent Skills hosts and GitHub CLI.
+- Runtime reference and asset folders for progressive disclosure plus separate maintenance fixtures under `tests/`.
 - Validation for skill frontmatter, manifests, links, and release boundaries.
 - Template-safe CI, template draft releases, and generated skill release workflows installed during bootstrap cleanup.
 - A cleanup path that converts the generated repository into a standalone maintained skill repo.
@@ -51,7 +51,9 @@ Detailed workflow: [docs/BOOTSTRAP-WORKFLOW.md](docs/BOOTSTRAP-WORKFLOW.md).
 - [docs/BOOTSTRAP-WORKFLOW.md](docs/BOOTSTRAP-WORKFLOW.md) - Full lifecycle from intake to standalone skill repository.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Repository modes, authority model, and design intent.
 - [docs/QUICKSTART.md](docs/QUICKSTART.md) - Short usage path for creating a skill repository.
-- [docs/INSTALL.md](docs/INSTALL.md) - How generated skill packages are installed.
+- [INSTALL.md](INSTALL.md) - Beginner installation, update, verification, repair, and removal requirements for generated skills.
+- [docs/GITHUB-CLI.md](docs/GITHUB-CLI.md) - Beginner GitHub CLI orientation for generated repositories.
+- [docs/GITHUB-CLI-DELIVERY.md](docs/GITHUB-CLI-DELIVERY.md) - Source, release, containment, and verification architecture.
 - [docs/RELEASING.md](docs/RELEASING.md) - Generated skill release checklist and packaging workflow.
 - [docs/TEMPLATE-RELEASING.md](docs/TEMPLATE-RELEASING.md) - Template repository release workflow.
 - [docs/PROVENANCE.md](docs/PROVENANCE.md) - Attribution and distilled-source notes.

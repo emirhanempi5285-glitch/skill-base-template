@@ -24,5 +24,10 @@ jobs:
       - name: Validate scaffold
         run: npm run validate
 
+      - name: Validate standard GitHub CLI source layout
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh skill publish --dry-run
+
       - name: Package smoke test
         run: npm run package -- v0.0.0 # placeholder tag; not a real release version

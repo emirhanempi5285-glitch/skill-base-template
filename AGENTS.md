@@ -20,7 +20,7 @@ Purpose: The user may provide incomplete, messy, or indirect source material. Th
 
 ### Task Goal
 
-Use `.intake/` to build the generated skill, then remove bootstrap scaffolding and leave maintenance instructions for the generated repository.
+Use `.intake/` to build the generated skill under `skills/<name>/`, then remove bootstrap scaffolding and leave maintenance instructions for the generated repository.
 
 Purpose: The final repository should stand alone. Future agents should maintain the skill itself, not this template's construction process.
 
@@ -42,9 +42,9 @@ When instructions appear to conflict, choose the option that best preserves the 
 - Treat `.intake/` as the only user-authored source area.
 - Read `.template/bootstrap/build-skill-from-intake.md` before changing skill files.
 - Run the intake adequacy gate before skill design, even when `.intake/` is empty or only contains a short idea.
-- Do not start `src/SKILL.md` until the build readiness gate passes and the agent's synthesized understanding is confirmed with the user.
+- Do not replace `skills/placeholder-skill/SKILL.md` until the build readiness gate passes and the agent's synthesized understanding is confirmed with the user.
 - Treat `.template/` as bootstrap control instructions, not domain source material.
-- Do not copy `.template/` content into `src/` unless the content is explicitly transformed into generic maintenance guidance.
+- Do not copy `.template/` content into `skills/` unless the content is explicitly transformed into generic maintenance guidance.
 - Exclude `.template/`, `.intake/`, `tmp/`, `dist/`, `.git/`, and `.idea/` from release artifacts.
 - After the skill is built and accepted, remove `.template/` and leave a standalone skill repository.
 
@@ -71,7 +71,7 @@ When instructions appear to conflict, choose the option that best preserves the 
 
 ### Skill Product
 
-`skill product` means the durable skill package under `src/` plus human docs, packaging manifests, scripts, and workflows needed to maintain and release it.
+`skill product` means the durable skill package under `skills/<name>/` plus human docs, packaging manifests, scripts, and workflows needed to maintain and release it.
 
 ### Maintenance Mode
 
@@ -83,7 +83,7 @@ Start by assessing intake adequacy. Identify whether the available material can 
 
 If intake is incomplete, resolve the gap through extraction, conservative inference, safe discovery, scoped experiments, scope narrowing, minimal human clarification, or a documented stop. Record temporary reasoning under `.template/state/` and durable evidence under `.intake/`.
 
-After the adequacy gate passes, inventory `.intake/` and identify the skill domain, user task, trigger phrases, boundaries, workflows, reusable references, and verification prompts.
+After the adequacy gate passes, inventory `.intake/` and identify the skill domain, user task, trigger phrases, boundaries, workflows, reusable references, and verification prompts. Rename `skills/placeholder-skill/` only after the final name is confirmed, and keep that directory identical to the frontmatter name.
 
 Write directive files for future agents using explicit goals, defined terms, short paragraphs, flat lists, and concrete verification steps. Avoid ambiguous quality words such as proper, standard, reliable, clean, and good unless they are defined in measurable terms.
 

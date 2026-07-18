@@ -22,13 +22,13 @@ The agent should not merely fill placeholders. It should infer the reusable capa
 
 If the agent finds contradictions in the intake, it should resolve low-risk issues locally and document high-impact assumptions. The goal is a maintainable skill, not a perfect transcript of every source file.
 
-If `.intake/` is empty, weak, conflicting, or exploratory, the agent should not start `src/SKILL.md` immediately. It should first determine what is missing, why the missing evidence matters, and how to resolve the gap with minimal human help.
+If `.intake/` is empty, weak, conflicting, or exploratory, the agent should not replace the placeholder skill immediately. It should first determine what is missing, why the missing evidence matters, and how to resolve the gap with minimal human help.
 
 Expected resolution paths include extracting evidence, making low-risk assumptions, inspecting local tools or docs, creating disposable experiments, narrowing scope, asking concise questions, or stopping before construction when the skill would otherwise be fabricated.
 
 ## What The Agent Builds
 
-The agent builds `src/SKILL.md`, supporting references, documentation, packaging manifests, release notes, and a maintenance-mode `AGENTS.md`.
+The agent renames `skills/placeholder-skill/` to the confirmed final name and builds its `SKILL.md`, runtime references, root installation guide, GitHub CLI orientation, separate maintenance fixtures, packaging manifests, release notes, and maintenance mode `AGENTS.md`.
 
 ## After Cleanup
 
